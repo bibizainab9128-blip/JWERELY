@@ -1,0 +1,818 @@
+# ✨ Bibi Zainab Jewellery — Complete E-Commerce Website
+
+I've crafted a luxurious, fully-functional single-file website for your brand. Save the code below as `index.html` and open it in any browser — everything works instantly (cart, personalization, WhatsApp ordering, filtering).
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bibi Zainab Jewellery — Luxury Bracelets</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#ff4f9a;
+    --pink-soft:#ffd1e3;
+    --purple:#7a2bd6;
+    --purple-deep:#3d0a6b;
+    --gold:#f5c451;
+    --gold-deep:#c9962b;
+    --cream:#fff8f0;
+    --ink:#2a1240;
+    --shadow:0 20px 60px rgba(122,43,214,.25);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Poppins',sans-serif;
+    color:var(--ink);
+    background:linear-gradient(135deg,#fff5fb 0%,#f3e6ff 50%,#fff5e6 100%);
+    overflow-x:hidden;
+    min-height:100vh;
+  }
+  h1,h2,h3,h4{font-family:'Playfair Display',serif;letter-spacing:.5px}
+
+  /* ===== Sparkle stars background ===== */
+  .stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+  .star{position:absolute;color:var(--gold);animation:twinkle 3s infinite ease-in-out;font-size:14px;opacity:.7}
+  @keyframes twinkle{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+
+  /* ===== Navbar ===== */
+  nav{
+    position:sticky;top:0;z-index:100;
+    background:rgba(255,255,255,.85);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(245,196,81,.3);
+    padding:15px 5%;
+    display:flex;align-items:center;justify-content:space-between;
+    box-shadow:0 4px 30px rgba(122,43,214,.08);
+  }
+  .logo{
+    font-family:'Playfair Display',serif;
+    font-size:1.6rem;font-weight:900;
+    background:linear-gradient(135deg,var(--purple) 0%,var(--pink) 50%,var(--gold) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    display:flex;align-items:center;gap:8px;cursor:pointer;
+  }
+  .logo::before{content:"✦";color:var(--gold);-webkit-text-fill-color:var(--gold);font-size:1.4rem}
+  .nav-links{display:flex;gap:30px;list-style:none}
+  .nav-links a{
+    text-decoration:none;color:var(--ink);font-weight:500;font-size:.95rem;
+    position:relative;transition:.3s;
+  }
+  .nav-links a:hover{color:var(--purple)}
+  .nav-links a::after{
+    content:"";position:absolute;bottom:-5px;left:0;width:0;height:2px;
+    background:linear-gradient(90deg,var(--pink),var(--gold));transition:.3s;
+  }
+  .nav-links a:hover::after{width:100%}
+  .cart-btn{
+    background:linear-gradient(135deg,var(--pink),var(--purple));
+    color:#fff;border:none;padding:10px 20px;border-radius:50px;
+    cursor:pointer;font-weight:600;display:flex;align-items:center;gap:8px;
+    box-shadow:0 8px 20px rgba(255,79,154,.35);transition:.3s;
+  }
+  .cart-btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(255,79,154,.5)}
+  .cart-count{
+    background:var(--gold);color:var(--ink);border-radius:50%;
+    width:22px;height:22px;font-size:.75rem;display:flex;align-items:center;justify-content:center;font-weight:700;
+  }
+
+  /* ===== Hero ===== */
+  .hero{
+    position:relative;z-index:1;
+    min-height:85vh;
+    display:flex;align-items:center;justify-content:center;
+    padding:60px 5%;
+    background:
+      radial-gradient(circle at 20% 30%,rgba(255,79,154,.15),transparent 50%),
+      radial-gradient(circle at 80% 70%,rgba(245,196,81,.2),transparent 50%),
+      radial-gradient(circle at 50% 50%,rgba(122,43,214,.1),transparent 60%);
+    text-align:center;
+  }
+  .hero-content{max-width:900px;position:relative;z-index:2}
+  .hero-badge{
+    display:inline-block;padding:8px 20px;border-radius:50px;
+    background:rgba(255,255,255,.7);backdrop-filter:blur(10px);
+    color:var(--purple);font-size:.85rem;font-weight:600;
+    border:1px solid rgba(245,196,81,.5);margin-bottom:20px;
+    letter-spacing:2px;text-transform:uppercase;
+  }
+  .hero h1{
+    font-size:clamp(2.5rem,6vw,5rem);font-weight:900;line-height:1.1;margin-bottom:20px;
+    background:linear-gradient(135deg,var(--purple-deep) 0%,var(--pink) 40%,var(--gold) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p{font-size:1.15rem;color:#5a3a7a;margin-bottom:35px;max-width:650px;margin-inline:auto;line-height:1.7}
+  .hero-buttons{display:flex;gap:15px;justify-content:center;flex-wrap:wrap}
+  .btn-primary,.btn-outline{
+    padding:15px 35px;border-radius:50px;font-weight:600;cursor:pointer;
+    font-size:1rem;text-decoration:none;display:inline-flex;align-items:center;gap:10px;
+    transition:.3s;border:2px solid transparent;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;
+    box-shadow:0 10px 30px rgba(255,79,154,.4);
+  }
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(255,79,154,.55)}
+  .btn-outline{
+    background:transparent;color:var(--purple);border-color:var(--gold);
+  }
+  .btn-outline:hover{background:var(--gold);color:var(--ink)}
+
+  /* ===== Floating bracelet decoration ===== */
+  .hero-deco{
+    position:absolute;font-size:6rem;opacity:.15;animation:float 6s ease-in-out infinite;
+  }
+  .deco-1{top:15%;left:5%;animation-delay:0s}
+  .deco-2{bottom:10%;right:8%;animation-delay:2s}
+  .deco-3{top:50%;right:15%;font-size:4rem;animation-delay:4s}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-20px) rotate(10deg)}}
+
+  /* ===== Sections ===== */
+  section{position:relative;z-index:1;padding:80px 5%}
+  .section-title{text-align:center;margin-bottom:50px}
+  .section-title .sub{
+    color:var(--pink);font-weight:600;letter-spacing:3px;
+    text-transform:uppercase;font-size:.85rem;margin-bottom:10px;
+  }
+  .section-title h2{
+    font-size:clamp(2rem,4vw,3rem);
+    background:linear-gradient(135deg,var(--purple-deep),var(--pink),var(--gold));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .section-title p{color:#6b4a8a;margin-top:10px;font-size:1rem}
+
+  /* ===== Category Filter ===== */
+  .filter-bar{
+    display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:40px;
+  }
+  .filter-btn{
+    padding:10px 22px;border-radius:50px;border:2px solid rgba(122,43,214,.2);
+    background:rgba(255,255,255,.6);backdrop-filter:blur(10px);
+    color:var(--ink);cursor:pointer;font-weight:500;transition:.3s;font-size:.9rem;
+  }
+  .filter-btn:hover{border-color:var(--pink);color:var(--pink)}
+  .filter-btn.active{
+    background:linear-gradient(135deg,var(--pink),var(--purple));
+    color:#fff;border-color:transparent;
+    box-shadow:0 8px 20px rgba(255,79,154,.3);
+  }
+
+  /* ===== Product Grid ===== */
+  .products{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+    gap:30px;max-width:1300px;margin:0 auto;
+  }
+  .product-card{
+    background:rgba(255,255,255,.85);
+    backdrop-filter:blur(15px);
+    border-radius:24px;overflow:hidden;
+    border:1px solid rgba(245,196,81,.3);
+    transition:.4s;cursor:pointer;
+    box-shadow:0 10px 40px rgba(122,43,214,.08);
+    display:flex;flex-direction:column;
+  }
+  .product-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 25px 60px rgba(122,43,214,.2);
+    border-color:var(--gold);
+  }
+  .product-image{
+    height:240px;position:relative;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+    font-size:5rem;
+  }
+  .product-image::before{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(135deg,var(--pink-soft),#e8d5ff,#fff5d6);
+    opacity:.9;
+  }
+  .product-image span{position:relative;z-index:1;filter:drop-shadow(0 5px 15px rgba(0,0,0,.15))}
+  .product-badge{
+    position:absolute;top:15px;left:15px;z-index:2;
+    background:linear-gradient(135deg,var(--gold),var(--gold-deep));
+    color:var(--ink);padding:5px 12px;border-radius:50px;
+    font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  }
+  .product-info{padding:20px;flex:1;display:flex;flex-direction:column}
+  .product-category{
+    font-size:.75rem;color:var(--pink);font-weight:600;
+    letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;
+  }
+  .product-name{font-size:1.2rem;font-weight:700;margin-bottom:8px;color:var(--ink)}
+  .product-desc{font-size:.85rem;color:#6b4a8a;line-height:1.5;margin-bottom:12px;flex:1}
+  .product-meta{display:flex;gap:10px;margin-bottom:15px;flex-wrap:wrap}
+  .meta-tag{
+    font-size:.7rem;padding:3px 10px;border-radius:50px;
+    background:rgba(122,43,214,.08);color:var(--purple);font-weight:500;
+  }
+  .product-footer{
+    display:flex;justify-content:space-between;align-items:center;
+    padding-top:15px;border-top:1px dashed rgba(122,43,214,.2);
+  }
+  .price{
+    font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;
+    background:linear-gradient(135deg,var(--purple),var(--pink));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .add-cart{
+    background:linear-gradient(135deg,var(--purple),var(--pink));
+    color:#fff;border:none;width:42px;height:42px;border-radius:50%;
+    cursor:pointer;font-size:1.2rem;transition:.3s;
+    box-shadow:0 6px 15px rgba(122,43,214,.3);
+  }
+  .add-cart:hover{transform:scale(1.1) rotate(8deg);box-shadow:0 10px 25px rgba(255,79,154,.5)}
+
+  /* ===== Personalized Section ===== */
+  .personalize{
+    background:linear-gradient(135deg,rgba(255,79,154,.08),rgba(122,43,214,.08),rgba(245,196,81,.08));
+    border-radius:30px;padding:60px 40px;margin:40px auto;max-width:1200px;
+    border:1px solid rgba(245,196,81,.3);
+    display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;
+  }
+  .personalize-preview{
+    background:linear-gradient(135deg,#fff5fb,#f3e6ff);
+    border-radius:20px;padding:50px;text-align:center;
+    border:2px dashed var(--gold);min-height:300px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+  }
+  .preview-bracelet{
+    font-size:5rem;margin-bottom:20px;
+    filter:drop-shadow(0 10px 20px rgba(122,43,214,.3));
+  }
+  .preview-name{
+    font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;
+    background:linear-gradient(135deg,var(--purple),var(--gold));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    min-height:40px;
+  }
+  .personalize-form{display:flex;flex-direction:column;gap:15px}
+  .personalize-form h3{font-size:1.8rem;color:var(--purple-deep);margin-bottom:5px}
+  .personalize-form p{color:#6b4a8a;margin-bottom:10px;line-height:1.6}
+  .form-input,.form-select{
+    padding:14px 18px;border-radius:12px;border:2px solid rgba(122,43,214,.15);
+    background:rgba(255,255,255,.8);font-family:inherit;font-size:.95rem;
+    transition:.3s;color:var(--ink);
+  }
+  .form-input:focus,.form-select:focus{
+    outline:none;border-color:var(--pink);
+    box-shadow:0 0 0 4px rgba(255,79,154,.1);
+  }
+  .form-label{font-size:.85rem;font-weight:600;color:var(--purple);margin-bottom:-10px}
+
+  /* ===== Cart Sidebar ===== */
+  .cart-overlay{
+    position:fixed;inset:0;background:rgba(42,18,64,.5);backdrop-filter:blur(5px);
+    z-index:200;opacity:0;pointer-events:none;transition:.3s;
+  }
+  .cart-overlay.open{opacity:1;pointer-events:all}
+  .cart-sidebar{
+    position:fixed;top:0;right:-450px;width:420px;max-width:90vw;height:100vh;
+    background:linear-gradient(180deg,#fff8fb,#f8f0ff);
+    z-index:201;transition:.4s cubic-bezier(.4,0,.2,1);
+    display:flex;flex-direction:column;
+    box-shadow:-10px 0 50px rgba(122,43,214,.2);
+  }
+  .cart-sidebar.open{right:0}
+  .cart-header{
+    padding:25px;background:linear-gradient(135deg,var(--purple),var(--pink));
+    color:#fff;display:flex;justify-content:space-between;align-items:center;
+  }
+  .cart-header h3{font-size:1.4rem}
+  .close-cart{
+    background:rgba(255,255,255,.2);border:none;color:#fff;width:36px;height:36px;
+    border-radius:50%;cursor:pointer;font-size:1.2rem;transition:.3s;
+  }
+  .close-cart:hover{background:rgba(255,255,255,.35);transform:rotate(90deg)}
+  .cart-items{flex:1;overflow-y:auto;padding:20px}
+  .cart-item{
+    display:flex;gap:15px;padding:15px;background:rgba(255,255,255,.7);
+    border-radius:16px;margin-bottom:12px;border:1px solid rgba(245,196,81,.2);
+  }
+  .cart-item-img{
+    width:70px;height:70px;border-radius:12px;
+    background:linear-gradient(135deg,var(--pink-soft),#e8d5ff);
+    display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0;
+  }
+  .cart-item-info{flex:1}
+  .cart-item-info h4{font-size:.95rem;margin-bottom:4px}
+  .cart-item-info .price{font-size:1rem}
+  .qty-controls{display:flex;align-items:center;gap:8px;margin-top:6px}
+  .qty-btn{
+    width:26px;height:26px;border-radius:50%;border:1px solid var(--purple);
+    background:#fff;color:var(--purple);cursor:pointer;font-weight:700;
+  }
+  .qty-btn:hover{background:var(--purple);color:#fff}
+  .remove-item{
+    background:none;border:none;color:#d33;cursor:pointer;font-size:1.1rem;
+    align-self:flex-start;
+  }
+  .cart-empty{text-align:center;padding:60px 20px;color:#888}
+  .cart-empty .emoji{font-size:4rem;margin-bottom:15px;opacity:.5}
+  .cart-footer{
+    padding:20px;border-top:1px solid rgba(122,43,214,.1);
+    background:rgba(255,255,255,.9);
+  }
+  .cart-total{
+    display:flex;justify-content:space-between;margin-bottom:15px;
+    font-size:1.1rem;font-weight:600;
+  }
+  .cart-total .price{font-size:1.5rem}
+  .checkout-btn{
+    width:100%;padding:15px;border:none;border-radius:50px;
+    background:linear-gradient(135deg,#25D366,#128C7E);
+    color:#fff;font-weight:700;font-size:1rem;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    box-shadow:0 10px 25px rgba(37,211,102,.35);transition:.3s;
+  }
+  .checkout-btn:hover{transform:translateY(-2px);box-shadow:0 15px 35px rgba(37,211,102,.5)}
+  .checkout-btn:disabled{opacity:.5;cursor:not-allowed}
+
+  /* ===== Checkout Modal ===== */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(42,18,64,.6);backdrop-filter:blur(8px);
+    z-index:300;display:none;align-items:center;justify-content:center;padding:20px;
+  }
+  .modal-overlay.open{display:flex}
+  .modal{
+    background:#fff;border-radius:24px;max-width:500px;width:100%;
+    max-height:90vh;overflow-y:auto;
+    box-shadow:0 30px 80px rgba(122,43,214,.3);
+  }
+  .modal-header{
+    padding:25px;background:linear-gradient(135deg,var(--pink),var(--purple));
+    color:#fff;border-radius:24px 24px 0 0;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .modal-body{padding:30px}
+  .modal-body h3{color:var(--purple-deep);margin-bottom:15px}
+  .order-summary{
+    background:linear-gradient(135deg,#fff5fb,#f8f0ff);
+    padding:15px;border-radius:12px;margin-bottom:20px;
+    border:1px solid rgba(245,196,81,.3);
+  }
+  .order-summary-item{
+    display:flex;justify-content:space-between;padding:6px 0;font-size:.9rem;
+  }
+  .order-summary-total{
+    border-top:2px dashed rgba(122,43,214,.2);margin-top:10px;padding-top:10px;
+    font-weight:700;font-size:1.1rem;color:var(--purple-deep);
+  }
+
+  /* ===== Footer ===== */
+  footer{
+    background:linear-gradient(135deg,var(--purple-deep),var(--purple));
+    color:#fff;padding:50px 5% 25px;position:relative;z-index:1;margin-top:60px;
+  }
+  .footer-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:40px;max-width:1200px;margin:0 auto 30px;
+  }
+  .footer-col h4{color:var(--gold);margin-bottom:15px;font-size:1.1rem}
+  .footer-col p,.footer-col a{
+    color:rgba(255,255,255,.8);font-size:.9rem;line-height:1.8;
+    text-decoration:none;display:block;transition:.3s;
+  }
+  .footer-col a:hover{color:var(--gold);padding-left:5px}
+  .footer-bottom{
+    text-align:center;padding-top:25px;
+    border-top:1px solid rgba(255,255,255,.15);
+    color:rgba(255,255,255,.6);font-size:.85rem;
+  }
+
+  /* ===== Toast ===== */
+  .toast{
+    position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);
+    background:linear-gradient(135deg,var(--purple),var(--pink));
+    color:#fff;padding:14px 28px;border-radius:50px;
+    box-shadow:0 15px 40px rgba(122,43,214,.4);
+    z-index:400;transition:.4s;font-weight:500;opacity:0;
+  }
+  .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+  /* ===== Responsive ===== */
+  @media(max-width:768px){
+    .nav-links{display:none}
+    .personalize{grid-template-columns:1fr;padding:40px 25px}
+    .hero{min-height:70vh;padding:40px 5%}
+    section{padding:60px 5%}
+  }
+</style>
+</head>
+<body>
+
+<!-- Sparkle stars -->
+<div class="stars" id="stars"></div>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="logo" onclick="scrollTo(0,0)">Bibi Zainab Jewellery</div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#collection">Collection</a></li>
+    <li><a href="#personalize">Personalize</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+  <button class="cart-btn" onclick="toggleCart()">
+    🛍️ Cart <span class="cart-count" id="cartCount">0</span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-deco deco-1">💎</div>
+  <div class="hero-deco deco-2">✨</div>
+  <div class="hero-deco deco-3">📿</div>
+  <div class="hero-content">
+    <span class="hero-badge">✦ Luxury Handcrafted in Pakistan ✦</span>
+    <h1>Elegance Woven<br/>Into Every Bracelet</h1>
+    <p>Discover the timeless beauty of Bibi Zainab Jewellery — where every piece tells a story of grace, tradition, and modern luxury. Crafted with love, worn with pride.</p>
+    <div class="hero-buttons">
+      <a href="#collection" class="btn-primary">Shop Collection ✨</a>
+      <a href="#personalize" class="btn-outline">Personalize Yours</a>
+    </div>
+  </div>
+</section>
+
+<!-- COLLECTION -->
+<section id="collection">
+  <div class="section-title">
+    <div class="sub">Our Exclusive Range</div>
+    <h2>Bracelet Collection</h2>
+    <p>Handpicked designs for every occasion</p>
+  </div>
+
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-btn active" data-filter="all">All ✦</button>
+    <button class="filter-btn" data-filter="gold">Gold</button>
+    <button class="filter-btn" data-filter="silver">Silver</button>
+    <button class="filter-btn" data-filter="pearl">Pearl</button>
+    <button class="filter-btn" data-filter="diamond">Diamond</button>
+    <button class="filter-btn" data-filter="name">Name</button>
+    <button class="filter-btn" data-filter="handmade">Handmade</button>
+  </div>
+
+  <div class="products" id="productsGrid"></div>
+</section>
+
+<!-- PERSONALIZE -->
+<section id="personalize">
+  <div class="section-title">
+    <div class="sub">Make It Yours</div>
+    <h2>Personalized Bracelets</h2>
+    <p>Design a bracelet with your name, a loved one's name, or "Bibi Zainab"</p>
+  </div>
+
+  <div class="personalize">
+    <div class="personalize-preview">
+      <div class="preview-bracelet" id="previewBracelet">📿</div>
+      <div class="preview-name" id="previewName">Your Name Here</div>
+      <small style="color:#888;margin-top:10px">Live Preview</small>
+    </div>
+    <div class="personalize-form">
+      <h3>Create Your Custom Bracelet</h3>
+      <p>Choose your style, enter your name, and we'll craft a one-of-a-kind piece just for you.</p>
+      <label class="form-label">Your Name / Text</label>
+      <input type="text" class="form-input" id="customName" placeholder="e.g. Bibi Zainab" maxlength="20" oninput="updatePreview()"/>
+      <label class="form-label">Bracelet Style</label>
+      <select class="form-select" id="customStyle" onchange="updatePreview()">
+        <option value="📿">Classic Chain (Rs. 1,499)</option>
+        <option value="💎">Diamond Cut (Rs. 2,499)</option>
+        <option value="🌸">Pearl Charm (Rs. 1,999)</option>
+        <option value="✨">Gold Plated (Rs. 2,299)</option>
+        <option value="🪷">Handmade Beaded (Rs. 999)</option>
+      </select>
+      <label class="form-label">Size</label>
+      <select class="form-select" id="customSize">
+        <option>Small (6 inch)</option>
+        <option>Medium (7 inch)</option>
+        <option>Large (8 inch)</option>
+      </select>
+      <button class="btn-primary" style="margin-top:10px" onclick="addCustomToCart()">Add Custom Bracelet to Cart ✨</button>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-title">
+    <div class="sub">Our Story</div>
+    <h2>About Bibi Zainab Jewellery</h2>
+  </div>
+  <div style="max-width:800px;margin:0 auto;text-align:center;color:#5a3a7a;line-height:1.8;font-size:1.05rem">
+    <p>Bibi Zainab Jewellery is a celebration of feminine grace and timeless craftsmanship. Each bracelet is thoughtfully designed and lovingly handmade in Pakistan, blending traditional artistry with contemporary elegance. From everyday wear to special occasions, our pieces are made to be treasured for a lifetime.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>✦ Bibi Zainab Jewellery</h4>
+      <p>Luxury bracelets handcrafted with love in Pakistan. Wearing elegance, every day.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="#home">Home</a>
+      <a href="#collection">Collection</a>
+      <a href="#personalize">Personalize</a>
+      <a href="#about">About Us</a>
+    </div>
+    <div class="footer-col">
+      <h4>Categories</h4>
+      <a href="#collection">Gold Bracelets</a>
+      <a href="#collection">Silver Bracelets</a>
+      <a href="#collection">Pearl Bracelets</a>
+      <a href="#collection">Diamond Style</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p>📱 WhatsApp: +92 300 0000000</p>
+      <p>📧 info@bibizainab.pk</p>
+      <p>📍 Pakistan</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 Bibi Zainab Jewellery. All rights reserved. ✦ Crafted with 💖
+  </div>
+</footer>
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<aside class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h3>🛍️ Your Cart</h3>
+    <button class="close-cart" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span>Total:</span>
+      <span class="price" id="cartTotal">Rs. 0</span>
+    </div>
+    <button class="checkout-btn" id="checkoutBtn" onclick="openCheckout()">
+      📱 Order via WhatsApp
+    </button>
+  </div>
+</aside>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>✨ Complete Your Order</h3>
+      <button class="close-cart" onclick="closeCheckout()">✕</button>
+    </div>
+    <div class="modal-body">
+      <h3>Delivery Details</h3>
+      <div class="order-summary" id="orderSummary"></div>
+      <label class="form-label">Full Name</label>
+      <input type="text" class="form-input" id="custName" placeholder="Your name" style="margin-bottom:12px;width:100%"/>
+      <label class="form-label">Phone Number</label>
+      <input type="tel" class="form-input" id="custPhone" placeholder="03XX XXXXXXX" style="margin-bottom:12px;width:100%"/>
+      <label class="form-label">Delivery Address</label>
+      <textarea class="form-input" id="custAddress" rows="3" placeholder="Full address with city" style="margin-bottom:12px;width:100%;resize:vertical"></textarea>
+      <button class="checkout-btn" onclick="sendWhatsAppOrder()" style="margin-top:10px">
+        📱 Confirm Order on WhatsApp
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  /* ===== PRODUCT DATA ===== */
+  const products = [
+    {id:1,name:"Royal Gold Cuff",cat:"gold",icon:"🌟",price:2499,colors:["Gold","Rose Gold"],sizes:["S","M","L"],desc:"Elegant gold-plated cuff with intricate Mughal-inspired patterns."},
+    {id:2,name:"Classic Gold Chain",cat:"gold",icon:"✨",price:1999,colors:["Gold"],sizes:["M","L"],desc:"Timeless gold chain bracelet perfect for everyday elegance."},
+    {id:3,name:"Moonlight Silver",cat:"silver",icon:"🌙",price:1499,colors:["Silver"],sizes:["S","M","L"],desc:"Polished silver bracelet with a crescent moon charm."},
+    {id:4,name:"Sterling Charm",cat:"silver",icon:"💫",price:1299,colors:["Silver"],sizes:["M"],desc:"Hand-finished sterling silver with delicate charm details."},
+    {id:5,name:"Pearl Elegance",cat:"pearl",icon:"🌸",price:1799,colors:["White","Cream"],sizes:["S","M"],desc:"Freshwater pearls strung on a silk cord — pure grace."},
+    {id:6,name:"Bibi Zainab Pearl",cat:"pearl",icon:"🪷",price:2299,colors:["White","Pink"],sizes:["M","L"],desc:"Signature pearl bracelet inspired by the name Bibi Zainab."},
+    {id:7,name:"Diamond Sparkle",cat:"diamond",icon:"💎",price:2999,colors:["Silver","Gold"],sizes:["S","M","L"],desc:"Crystal-cut diamonds set in a dazzling tennis-style design."},
+    {id:8,name:"Eternity Diamond",cat:"diamond",icon:"💠",price:3499,colors:["Gold"],sizes:["M"],desc:"A luxurious eternity bracelet with brilliant-cut stones."},
+    {id:9,name:"Name Bracelet — Gold",cat:"name",icon:"🔤",price:1499,colors:["Gold","Silver"],sizes:["S","M","L"],desc:"Custom name plate in elegant gold finish."},
+    {id:10,name:"Name Bracelet — Heart",cat:"name",icon:"💖",price:1699,colors:["Rose Gold","Gold"],sizes:["S","M"],desc:"Heart-shaped name pendant bracelet — perfect gift."},
+    {id:11,name:"Handmade Beaded",cat:"handmade",icon:"📿",price:999,colors:["Pink","Purple","Gold"],sizes:["Free Size"],desc:"Colorful handmade beaded bracelet with golden accents."},
+    {id:12,name:"Boho Handmade",cat:"handmade",icon:"🪻",price:1199,colors:["Multi"],sizes:["Free Size"],desc:"Bohemian-style handmade bracelet with tassels and beads."},
+    {id:13,name:"Heritage Gold Bangle",cat:"gold",icon:"👑",price:2799,colors:["Gold"],sizes:["M","L"],desc:"Traditional bangle-style bracelet with heritage motifs."},
+    {id:14,name:"Silver Infinity",cat:"silver",icon:"♾️",price:1399,colors:["Silver"],sizes:["M"],desc:"Infinity symbol silver bracelet — symbol of eternal love."},
+    {id:15,name:"Bibi Zainab Signature",cat:"name",icon:"✦",price:2499,colors:["Gold"],sizes:["M"],desc:"Exclusive 'Bibi Zainab' signature name bracelet in 24K gold plate."}
+  ];
+
+  /* ===== RENDER PRODUCTS ===== */
+  const grid = document.getElementById('productsGrid');
+  function renderProducts(filter='all'){
+    grid.innerHTML = '';
+    const list = filter==='all' ? products : products.filter(p=>p.cat===filter);
+    list.forEach(p=>{
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `
+        <div class="product-image">
+          <span class="product-badge">${p.cat}</span>
+          <span>${p.icon}</span>
+        </div>
+        <div class="product-info">
+          <div class="product-category">${p.cat} Collection</div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-desc">${p.desc}</div>
+          <div class="product-meta">
+            ${p.colors.map(c=>`<span class="meta-tag">🎨 ${c}</span>`).join('')}
+            ${p.sizes.map(s=>`<span class="meta-tag">📏 ${s}</span>`).join('')}
+          </div>
+          <div class="product-footer">
+            <div class="price">Rs. ${p.price.toLocaleString()}</div>
+            <button class="add-cart" onclick="addToCart(${p.id})" title="Add to cart">+</button>
+          </div>
+        </div>`;
+      grid.appendChild(card);
+    });
+  }
+  renderProducts();
+
+  /* ===== FILTER ===== */
+  document.querySelectorAll('.filter-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      renderProducts(btn.dataset.filter);
+    });
+  });
+
+  /* ===== CART ===== */
+  let cart = JSON.parse(localStorage.getItem('bzj_cart') || '[]');
+
+  function saveCart(){
+    localStorage.setItem('bzj_cart',JSON.stringify(cart));
+    updateCartUI();
+  }
+
+  function addToCart(id){
+    const p = products.find(x=>x.id===id);
+    const existing = cart.find(x=>x.id===id);
+    if(existing) existing.qty++;
+    else cart.push({...p,qty:1});
+    saveCart();
+    showToast(`✨ ${p.name} added to cart!`);
+  }
+
+  function addCustomToCart(){
+    const name = document.getElementById('customName').value.trim() || 'Custom';
+    const style = document.getElementById('customStyle').value;
+    const size = document.getElementById('customSize').value;
+    const priceMap = {'📿':1499,'💎':2499,'🌸':1999,'✨':2299,'🪷':999};
+    const price = priceMap[style];
+    const custom = {
+      id:'custom_'+Date.now(),
+      name:`Personalized: "${name}"`,
+      icon:style,price,qty:1,
+      cat:'personalized',
+      size,
+      isCustom:true
+    };
+    cart.push(custom);
+    saveCart();
+    showToast(`✨ Custom bracelet added!`);
+  }
+
+  function updateCartUI(){
+    document.getElementById('cartCount').textContent = cart.reduce((s,i)=>s+i.qty,0);
+    const container = document.getElementById('cartItems');
+    if(cart.length===0){
+      container.innerHTML = `<div class="cart-empty"><div class="emoji">🛍️</div><p>Your cart is empty</p><p style="font-size:.85rem;margin-top:8px">Add some beautiful bracelets!</p></div>`;
+    } else {
+      container.innerHTML = cart.map((item,idx)=>`
+        <div class="cart-item">
+          <div class="cart-item-img">${item.icon}</div>
+          <div class="cart-item-info">
+            <h4>${item.name}</h4>
+            <div class="price">Rs. ${(item.price*item.qty).toLocaleString()}</div>
+            <div class="qty-controls">
+              <button class="qty-btn" onclick="changeQty(${idx},-1)">−</button>
+              <span>${item.qty}</span>
+              <button class="qty-btn" onclick="changeQty(${idx},1)">+</button>
+            </div>
+          </div>
+          <button class="remove-item" onclick="removeItem(${idx})">🗑️</button>
+        </div>`).join('');
+    }
+    const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+    document.getElementById('cartTotal').textContent = 'Rs. ' + total.toLocaleString();
+    document.getElementById('checkoutBtn').disabled = cart.length===0;
+  }
+
+  function changeQty(idx,delta){
+    cart[idx].qty += delta;
+    if(cart[idx].qty<=0) cart.splice(idx,1);
+    saveCart();
+  }
+  function removeItem(idx){cart.splice(idx,1);saveCart();}
+
+  function toggleCart(){
+    document.getElementById('cartSidebar').classList.toggle('open');
+    document.getElementById('cartOverlay').classList.toggle('open');
+  }
+
+  /* ===== CHECKOUT ===== */
+  function openCheckout(){
+    if(cart.length===0) return;
+    const summary = document.getElementById('orderSummary');
+    const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+    summary.innerHTML = cart.map(i=>`
+      <div class="order-summary-item">
+        <span>${i.icon} ${i.name} × ${i.qty}</span>
+        <span>Rs. ${(i.price*i.qty).toLocaleString()}</span>
+      </div>`).join('') +
+      `<div class="order-summary-item order-summary-total">
+        <span>Total</span><span>Rs. ${total.toLocaleString()}</span>
+      </div>`;
+    document.getElementById('checkoutModal').classList.add('open');
+  }
+  function closeCheckout(){document.getElementById('checkoutModal').classList.remove('open');}
+
+  function sendWhatsAppOrder(){
+    const name = document.getElementById('custName').value.trim();
+    const phone = document.getElementById('custPhone').value.trim();
+    const address = document.getElementById('custAddress').value.trim();
+    if(!name||!phone||!address){showToast('⚠️ Please fill all fields');return;}
+    const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+    let msg = `✨ *NEW ORDER — Bibi Zainab Jewellery* ✨\n\n`;
+    msg += `👤 *Name:* ${name}\n📱 *Phone:* ${phone}\n📍 *Address:* ${address}\n\n`;
+    msg += `🛍️ *Items Ordered:*\n`;
+    cart.forEach(i=>{msg += `• ${i.name} × ${i.qty} = Rs. ${(i.price*i.qty).toLocaleString()}\n`;});
+    msg += `\n💰 *Total: Rs. ${total.toLocaleString()}*\n\nThank you! 💖`;
+    const waNumber = '923000000000'; // ← Replace with your WhatsApp number
+    window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`,'_blank');
+    cart = [];saveCart();closeCheckout();toggleCart();
+    showToast('✅ Order sent to WhatsApp!');
+  }
+
+  /* ===== PERSONALIZE PREVIEW ===== */
+  function updatePreview(){
+    const name = document.getElementById('customName').value.trim();
+    const style = document.getElementById('customStyle').value;
+    document.getElementById('previewName').textContent = name || 'Your Name Here';
+    document.getElementById('previewBracelet').textContent = style;
+  }
+
+  /* ===== TOAST ===== */
+  function showToast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),2500);
+  }
+
+  /* ===== SPARKLE STARS ===== */
+  const starsContainer = document.getElementById('stars');
+  for(let i=0;i<40;i++){
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.textContent = ['✦','✧','⋆','✵'][Math.floor(Math.random()*4)];
+    s.style.left = Math.random()*100+'%';
+    s.style.top = Math.random()*100+'%';
+    s.style.animationDelay = Math.random()*3+'s';
+    s.style.fontSize = (8+Math.random()*14)+'px';
+    starsContainer.appendChild(s);
+  }
+
+  updateCartUI();
+</script>
+</body>
+</html>
+```
+
+---
+
+## 🌸 What's Included
+
+| Feature | Details |
+|---|---|
+| 🎨 **Luxury Theme** | Pink + purple + gold gradients, glassmorphism, sparkle stars |
+| 🏠 **Home Page** | Hero section with animated floating jewellery icons |
+| 📿 **6 Categories** | Gold, Silver, Pearl, Diamond, Name, Handmade (15 products) |
+| 💍 **Personalization** | Live-preview custom bracelet builder with "Bibi Zainab" option |
+| 💰 **PKR Pricing** | Rs. 999 → Rs. 3,499 range, formatted with commas |
+| 🛒 **Shopping Cart** | Slide-in sidebar, quantity controls, localStorage persistence |
+| 📱 **WhatsApp Order** | Auto-generates formatted order message with customer details |
+| 📱 **Responsive** | Works beautifully on mobile, tablet, and desktop |
+
+## ⚙️ Quick Setup
+
+1. **Save** the code as `index.html`
+2. **Replace the WhatsApp number** on line with `const waNumber = '923000000000'` → use your real number (country code without `+`)
+3. **Open** in any browser — done! ✨
+
+## 💡 Easy Customizations
+
+- **Add products**: Edit the `products` array in the `<script>` section
+- **Change colors**: Edit the `:root` CSS variables at the top
+- **Real images**: Replace the emoji `icon` field with `<img>` tags in the product card template
+- **Add payment**: Integrate JazzCash/Easypaisa by adding a payment gateway button in the checkout modal
+
+Would you like me to add **product image uploads**, a **JazzCash/Easypaisa payment option**, an **admin panel** to manage products, or a **multi-page version** with separate collection pages? 💖
